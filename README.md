@@ -1,2 +1,2 @@
 # wp-autoinstall
-A docker base Wordpress auto installation
+A docker based Wordpress auto installation

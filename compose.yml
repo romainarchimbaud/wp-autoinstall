@@ -1,0 +1,49 @@
+services:
+  wordpress:
+    build:
+      context: .
+      args:
+        - USER_UID=${USER_UID}
+        - USER_GID=${USER_GID}
+    volumes:
+      - ./config/php.conf.ini:/usr/local/etc/php/conf.d/php.ini
+      - ${WORDPRESS_DATA_DIR}:/var/www/html
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_NAME=${COMPOSE_PROJECT_NAME}
+      - WORDPRESS_TABLE_PREFIX=${WORDPRESS_TABLE_PREFIX}
+      - WORDPRESS_DB_USER=${DATABASE_USER}
+      - WORDPRESS_DB_PASSWORD=${DATABASE_PASSWORD}
+      - WORDPRESS_DEBUG=${WORDPRESS_DEBUG}    
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - 80:80
+      #- 443:443
+      #- 5173:5173
+
+  db:
+    image: mariadb:latest
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_USER=${DATABASE_USER}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_DATABASE=${COMPOSE_PROJECT_NAME}
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - ${PHPMYADMIN_PORT}:80
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  db_data:  # Volume pour les données de la base de données
