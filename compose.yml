@@ -26,7 +26,7 @@ services:
   db:
     image: mariadb:latest
     volumes:
-      - db_data:/var/lib/mysql
+      - ./db_data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
       - MYSQL_USER=${DATABASE_USER}
@@ -44,6 +44,3 @@ services:
     depends_on:
       - db
     restart: always
-
-volumes:
-  db_data:  # Volume pour les données de la base de données
