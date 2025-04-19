@@ -78,6 +78,7 @@ clean:
 	@echo "\n🧹 Suppression des fichiers et dossiers liés..."
 	@docker compose down -v
 	@rm -rf wordpress/* && rm -f wordpress/.htaccess 1 > /dev/null 2>&1
+	@sudo rm -rf db_data/*
 
 # ♻️ Nettoyage complet (down + suppression)
 reset: clean
