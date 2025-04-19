@@ -5,6 +5,7 @@ services:
       args:
         - USER_UID=${USER_UID}
         - USER_GID=${USER_GID}
+    container_name: wordpress
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/php.ini
       - ${WORDPRESS_DATA_DIR}:/var/www/html
@@ -20,8 +21,8 @@ services:
     restart: always
     ports:
       - 80:80
-      #- 443:443
       #- 5173:5173
+      #- 443:443
 
   db:
     image: mariadb:latest

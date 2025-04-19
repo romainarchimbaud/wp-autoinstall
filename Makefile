@@ -64,7 +64,7 @@ install:
 
 	@echo "\n⭐ Installation de WordPress terminée : ${WORDPRESS_WEBSITE_URL}/wp-admin \n"
 
-# 🧹 Stopper les containers
+# ⚙️ Accès au container wordpress
 bash:
 	@docker compose exec wordpress bash
 
@@ -73,7 +73,7 @@ down:
 	@echo "\n🛑 Arrêt des services..."
 	@docker compose down
 
-# 🧹 Nettoyage des volumes (mysql / wordpress)
+# 🧹 Nettoyage des volumes (db_data / wordpress)
 clean: 
 	@echo "\n🧹 Suppression des fichiers et dossiers liés..."
 	@docker compose down -v
