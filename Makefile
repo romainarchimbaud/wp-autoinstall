@@ -4,7 +4,7 @@ include .env
 DC=docker compose exec wordpress
 DC_WP=docker compose exec wordpress wp
 
-.PHONY: autoinstall build up healthcheck install rsync-db rsync-content down clean reset
+.PHONY: autoinstall build up healthcheck install rsync-db rsync-content deploy-theme down clean reset
 
 # 🛠️ Autoinstall wordpress
 autoinstall: build healthcheck install
@@ -116,6 +116,20 @@ rsync-content:
 		$(LOCAL_PATH)/wp-content/
 	@echo "✅ Contenu wp-content synchronisé !"
 
+
+deploy-theme:
+	@echo "🚀 Déploiement du thème vers le staging..."
+	@read -p "Êtes-vous sûr de vouloir déployer le thème sur $(REMOTE_STAGING_PATH)/wp-content/themes/montheme/ ? (yes/no) " answer; \
+	if [ "$$answer" = "yes" ]; then \
+		rsync -avz --delete \
+			--exclude-from=./wordpress/wp-content/themes/montheme/.deployignore \
+			-e "ssh" \
+			./wordpress/wp-content/themes/montheme/ \
+			alias_ssh:$(REMOTE_STAGING_PATH)/wp-content/themes/montheme/; \
+		echo "✅ Thème déployé avec succès sur le staging !"; \
+	else \
+		echo "❌ Déploiement annulé."; \
+	fi
 
 # ⚙️ Accès au container wordpress
 bash:
