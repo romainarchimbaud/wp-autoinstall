@@ -1,0 +1,5 @@
+# Port Vite : ajouté à COMPOSE_FILE dans .env par make setup quand Vite est coché
+services:
+  wordpress:
+    ports:
+      - ${VITE_PORT}:5173

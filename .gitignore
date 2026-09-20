@@ -1,0 +1,11 @@
+.DS_Store
+wordpress/*
+!wordpress/.keep
+db_data/*
+!db_data/.keep
+_trash
+.env
+*.env
+# Dumps SQL (make rsync-db) : jamais commités
+dump.sql
+/db_backups/
